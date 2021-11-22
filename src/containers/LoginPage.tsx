@@ -1,24 +1,25 @@
 import { useEffect } from 'react'
 import { Form, Field } from 'react-final-form'
-// import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { composeValidators, required, withoutCyrillic } from 'helpers/validators'
 import { useActions, useAppSelector } from 'store/hooks'
-import { Input, Submit, Icon, Logo } from 'components'
+import { Input, Icon, Submit, Logo } from 'components'
 import { TAuthPayload } from 'types'
 
 import * as ST from './styled'
 
 const LoginPage = () => {
-  // const history = useHistory()
+  const navigate = useNavigate()
 
   const { authenticate } = useActions()
   const loading = useAppSelector((state) => state.auth.loading)
   const isLoggedIn = useAppSelector((state) => !!state.auth.sessionKey?.length)
-  console.log('render')
+  const authError = useAppSelector(state => state.auth.error)
+
   useEffect(() => {
     if (isLoggedIn) {
-      // history.push('/console')
+      // console.log(navigate)
     }
   }, [isLoggedIn])
 
@@ -37,24 +38,24 @@ const LoginPage = () => {
       </ST.LogoWrapper>
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, form, submitting, pristine, hasValidationErrors }) => (
+        render={({ handleSubmit, form, pristine, hasValidationErrors }) => (
           <ST.FormStyled onSubmit={handleSubmit}>
             <ST.Header>API Консолька</ST.Header>
             {
-            // !isLoggedIn &&
-            // <ST.Error>
-            //   <ST.ErrorIcon>
-            //     <Icon id='meh-face' />
-            //   </ST.ErrorIcon>
-            //   <ST.ErrorText>
-            //     <ST.ErrorTitle>
-            //       Вход не вышел
-            //     </ST.ErrorTitle>
-            //     <ST.ErrorDescription>
-            //       {'{id: "error/auth/failed", explain: "wrong_credentials"}'}
-            //     </ST.ErrorDescription>
-            //   </ST.ErrorText>
-            // </ST.Error>
+              authError &&
+            <ST.Error>
+              <ST.ErrorIcon>
+                <Icon id='meh-face' />
+              </ST.ErrorIcon>
+              <ST.ErrorText>
+                <ST.ErrorTitle>
+                  Вход не вышел
+                </ST.ErrorTitle>
+                <ST.ErrorDescription>
+                  {`id:${authError?.id}, explain:${authError?.explain}`}
+                </ST.ErrorDescription>
+              </ST.ErrorText>
+            </ST.Error>
             }
             <Field
               name='login'
@@ -76,7 +77,7 @@ const LoginPage = () => {
               onClick={form.reset}
               placeholder="Войти"
               loading={loading}
-              disabled={submitting || pristine || hasValidationErrors}
+              disabled={pristine || hasValidationErrors}
             />
           </ST.FormStyled>
         )}

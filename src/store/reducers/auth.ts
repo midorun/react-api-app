@@ -1,18 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TAuthPayload, TAuthSuccess } from 'types'
 
-type TAuthState = {
-  loading: boolean,
-  sessionKey: string | null,
-  login: string | null,
-  sublogin?: string | null
-}
+import { TAuthFailure, TAuthPayload, TAuthState, TAuthSuccess } from 'types'
 
 const initialState: TAuthState = {
   loading: false,
   sessionKey: null,
   login: null,
-  sublogin: null
+  sublogin: null,
+  error: null
 }
 
 const authSlice = createSlice({
@@ -32,15 +27,18 @@ const authSlice = createSlice({
         loading: false,
         login,
         sessionKey,
-        sublogin
+        sublogin,
+        error: null
       }
     },
-    authenticateFailure (state) {
+    authenticateFailure (state, action: PayloadAction<TAuthFailure>) {
       return {
         ...state,
         sessionKey: null,
         login: null,
-        sublogin: null
+        sublogin: null,
+        error: action.payload,
+        loading: false
       }
     },
     logout (state) {
