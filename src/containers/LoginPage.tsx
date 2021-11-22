@@ -1,0 +1,89 @@
+import { useEffect } from 'react'
+import { Form, Field } from 'react-final-form'
+// import { useHistory } from 'react-router-dom'
+
+import { composeValidators, required, withoutCyrillic } from 'helpers/validators'
+import { useActions, useAppSelector } from 'store/hooks'
+import { Input, Submit, Icon, Logo } from 'components'
+import { TAuthPayload } from 'types'
+
+import * as ST from './styled'
+
+const LoginPage = () => {
+  // const history = useHistory()
+
+  const { authenticate } = useActions()
+  const loading = useAppSelector((state) => state.auth.loading)
+  const isLoggedIn = useAppSelector((state) => !!state.auth.sessionKey?.length)
+  console.log('render')
+  useEffect(() => {
+    if (isLoggedIn) {
+      // history.push('/console')
+    }
+  }, [isLoggedIn])
+
+  const onSubmit = ({ login, sublogin, password }: TAuthPayload) => {
+    authenticate({
+      login,
+      sublogin,
+      password
+    })
+  }
+
+  return (
+    <ST.Wrapper>
+      <ST.LogoWrapper>
+        <Logo />
+      </ST.LogoWrapper>
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, form, submitting, pristine, hasValidationErrors }) => (
+          <ST.FormStyled onSubmit={handleSubmit}>
+            <ST.Header>API Консолька</ST.Header>
+            {
+            // !isLoggedIn &&
+            // <ST.Error>
+            //   <ST.ErrorIcon>
+            //     <Icon id='meh-face' />
+            //   </ST.ErrorIcon>
+            //   <ST.ErrorText>
+            //     <ST.ErrorTitle>
+            //       Вход не вышел
+            //     </ST.ErrorTitle>
+            //     <ST.ErrorDescription>
+            //       {'{id: "error/auth/failed", explain: "wrong_credentials"}'}
+            //     </ST.ErrorDescription>
+            //   </ST.ErrorText>
+            // </ST.Error>
+            }
+            <Field
+              name='login'
+              render={(props) => <Input {...props} type='text' label='Логин' />}
+              validate={composeValidators(required, withoutCyrillic)}
+            />
+            <Field
+              name='sublogin'
+              placeholder='Сублогин'
+              render={(props) => <Input {...props} type="text" label="Сублогин" optional />}
+            />
+            <Field
+              name='password'
+              placeholder='Пароль'
+              render={(props) => <Input {...props} type='password' label="Пароль" />}
+              validate={composeValidators(required, withoutCyrillic)}
+            />
+            <Submit
+              onClick={form.reset}
+              placeholder="Войти"
+              loading={loading}
+              disabled={submitting || pristine || hasValidationErrors}
+            />
+          </ST.FormStyled>
+        )}
+      >
+      </Form>
+    </ST.Wrapper>
+  )
+}
+
+export default LoginPage

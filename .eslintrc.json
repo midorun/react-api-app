@@ -12,7 +12,8 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 12
+        "ecmaVersion": 12,
+        "sourceType": "module"
     },
     "plugins": [
         "react",
@@ -20,7 +21,8 @@
     ],
     "rules": {
         "no-use-before-define": "off",
+        "no-unused-vars": "warn",
+        "react/react-in-jsx-scope": "off",
         "react/prop-types": "off"
-
     }
 }
