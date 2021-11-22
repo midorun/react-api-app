@@ -4,7 +4,7 @@ import { all, put, call, takeLatest } from 'redux-saga/effects'
 import api from 'helpers/sendsay'
 import { EActionTypes } from 'store/constants'
 import { authActions } from 'store/reducers/auth'
-import { TAuthFailure, TAuthPayload } from 'types'
+import { TAuthPayload } from 'types'
 
 const { authenticateSuccess, authenticateFailure, logout } = authActions
 

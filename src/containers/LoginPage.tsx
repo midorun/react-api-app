@@ -11,15 +11,15 @@ import * as ST from './styled'
 
 const LoginPage = () => {
   const navigate = useNavigate()
-
   const { authenticate } = useActions()
+
   const loading = useAppSelector((state) => state.auth.loading)
   const isLoggedIn = useAppSelector((state) => !!state.auth.sessionKey?.length)
   const authError = useAppSelector(state => state.auth.error)
 
   useEffect(() => {
     if (isLoggedIn) {
-      // console.log(navigate)
+      navigate('/console')
     }
   }, [isLoggedIn])
 
