@@ -1,12 +1,12 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { all, put, call, takeLatest } from 'redux-saga/effects'
+import { all, put, takeLatest } from 'redux-saga/effects'
 
 import api from 'helpers/sendsay'
 import { EActionTypes } from 'store/constants'
 import { authActions } from 'store/reducers/auth'
 import { TAuthPayload } from 'types'
 
-const { authenticateSuccess, authenticateFailure, logout } = authActions
+const { authenticateSuccess, authenticateFailure } = authActions
 
 export function * authenticateCheckSaga () {
   try {
@@ -15,7 +15,7 @@ export function * authenticateCheckSaga () {
     })
   } catch (error) {
     if (error.id === 'error/auth/failed') {
-      yield call(logoutSaga)
+      yield put(authenticateFailure(error))
     }
   }
 }
@@ -46,15 +46,9 @@ export function * authenticateSaga ({ payload }: PayloadAction<TAuthPayload>) {
   }
 }
 
-export function * logoutSaga () {
-  yield put(logout())
-  document.cookie = ''
-}
-
 export default function * root () {
   yield all([
     takeLatest(EActionTypes.AUTHENTICATE, authenticateSaga),
-    takeLatest(EActionTypes.AUTHENTICATE_CHECK, authenticateCheckSaga),
-    takeLatest(EActionTypes.LOGOUT, logoutSaga)
+    takeLatest(EActionTypes.AUTHENTICATE_CHECK, authenticateCheckSaga)
   ])
 }

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
 
 import { TButtonProps } from '../Submit'
-import { Wrapper as LoginPageWrapper } from 'containers/styled'
+import { Wrapper as LoginPageWrapper } from 'containers/LoginPage/styled'
 
 export const Button = styled.button<TButtonProps>`
   display: flex;
