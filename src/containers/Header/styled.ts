@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components/macro'
 
 export const Header = styled.div`
   padding: 10px 15px;
@@ -7,15 +7,21 @@ export const Header = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid #CCCCCC;
   
-  > * {
+  > * { 
     display: flex;
   }
   
-`;
+`
 
-export const LeftSide = styled.div``
+export const LeftSide = styled.div`
+  gap: 20px;
+`
 
-export const RightSide = styled.div``
+export const RightSide = styled.div`
+  gap: 30px;
+  display: flex;
+  align-items: center;
+`
 
 export const Title = styled.span`
   display: flex;
@@ -25,7 +31,7 @@ export const Title = styled.span`
 `
 
 export const User = styled.div`
-  margin-right: 30px;
+  height: 30px;
   padding: 0 15px;
   display: flex;
   align-items: center;
@@ -47,25 +53,18 @@ export const Sublogin = styled.span`
   
 `
 
-export const Controls = styled.div`
-  display: flex;
-`
-
 export const Logout = styled.div`
-  margin-right: 30px;
   display: flex;
+  cursor: pointer;
 `
 
 export const Exit = styled.span`
   margin-right: 8px;
-`;
-
-export const FullScreen = styled.div`
-  
 `
 
-
-
-
-
-
+export const FullScreen = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`

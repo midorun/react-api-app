@@ -44,8 +44,10 @@ const authSlice = createSlice({
     logout (state) {
       return {
         ...state,
-        loading: false,
-        sessionKey: null
+        sessionKey: null,
+        login: null,
+        sublogin: null,
+        loading: false
       }
     }
   }
