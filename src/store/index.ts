@@ -21,10 +21,9 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     thunk: false,
-    // serializableCheck: {
-    //   ignoredActions: ['persist/PERSIST']
-    // }
-    serializableCheck: false
+    serializableCheck: {
+      ignoredActions: ['persist/PERSIST']
+    }
   }).concat(sagaMiddleware)
 })
 
