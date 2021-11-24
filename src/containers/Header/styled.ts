@@ -1,3 +1,4 @@
+import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
 
 export const Header = styled.div`
@@ -5,7 +6,7 @@ export const Header = styled.div`
   height: 50px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid ${ECOLORS.BORDER_GRAY};
   
   > * { 
     display: flex;

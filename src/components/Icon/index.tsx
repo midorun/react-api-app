@@ -7,11 +7,18 @@ import * as ST from 'components/Icon/styled'
 type TIconProps = {
   id: string
   className?: string
+  width?: string,
+  height?: string
 }
 
-const Icon: FC<TIconProps> = ({ id, className }) => {
+const Icon: FC<TIconProps> = ({ id, className, width, height }) => {
   return (
-    <ST.svg className={className && className + 'icon'} xmlns="http://www.w3.org/2000/svg" >
+    <ST.svg
+      className={className && className + 'icon'}
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+    >
       <use xlinkHref={`${iconsRoute}#${id}`} />
     </ST.svg>
   )

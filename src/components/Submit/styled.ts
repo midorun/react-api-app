@@ -1,3 +1,4 @@
+import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
 
 import { TButtonProps } from '../Submit'
@@ -15,7 +16,7 @@ export const Button = styled.button<TButtonProps>`
   font-weight: 500;
   font-size: 16px;
   line-height: 30px;
-  color: #FFFFFF;
+  color: ${ECOLORS.WHITE};
   cursor: pointer;
 
   ${LoginPageWrapper} & {
