@@ -26,8 +26,8 @@ export type TAuthState = {
 
 export type TRequestState = {
   loading: boolean,
-  request: TRequest | null,
-  response: unknown | null,
+  requestValue: TRequest,
+  response: any | null,
   error: unknown | null,
   history: TRequest[]
 }

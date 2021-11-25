@@ -21,7 +21,6 @@ export function * authenticateCheckSaga () {
 }
 
 export function * authenticateSaga ({ payload }: PayloadAction<TAuthPayload>) {
-  console.log('authSaga')
   try {
     yield api.sendsay
       .login({

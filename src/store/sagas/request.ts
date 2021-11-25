@@ -8,22 +8,20 @@ import { TRequest } from 'types'
 const { requestSuccess, requestFailure, addRequestToHistory, request } = requestActions
 
 export function * requestSaga (action: PayloadAction<TRequest>) {
+  let response
+
   try {
     yield api.sendsay
       .request(action.payload)
-      .then((res: unknown) => {
-        put(
-          requestSuccess({
-            res
-          })
-        )
+      .then((res: any) => {
+        requestSuccess({
+          res
+        })
       })
 
-    yield put(
-      requestSuccess({
-        ...action.payload
-      })
-    )
+    // yield put(requestSuccess({
+    //   response
+    // }))
 
     // yield put(
     //   addRequestToHistory({

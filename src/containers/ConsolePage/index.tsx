@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { Resizable } from 're-resizable'
 
-import { Submit } from 'components'
+import { Submit, Icon } from 'components'
 import ResponseField from 'containers/ResponseField'
 import { useActions, useAppSelector } from 'store/hooks'
 import { Header, RequestHistory, RequestField } from 'containers'
@@ -16,7 +16,13 @@ const ConsolePage = () => {
   const { authenticateCheck } = useActions()
   const [requestFieldWidth, setRequestFieldWidth] = useState<string | number>('50%')
   const { login } = useAppSelector(state => state.auth)
-  const { request } = useAppSelector(state => state.request)
+  const { request } = useActions()
+  const [requestBody, setRequestBody] = useState('{ "action": "pong" }')
+
+  const formatRequestField = () => {
+    setRequestBody(JSON.stringify(JSON.parse(requestBody), null, 2))
+  }
+
   useEffect(() => {
     authenticateCheck()
     if (!login) {
@@ -35,7 +41,7 @@ const ConsolePage = () => {
         <ST.FieldsWrapper>
           <Resizable
             size={{ width: requestFieldWidth, height: '100%' }}
-            onResizeStop={(e, direction, elementRef, delta) => {
+            onResizeStop={(e, direction, elementRef) => {
               setRequestFieldWidth(elementRef.clientWidth)
             }}
             minWidth={'25%'}
@@ -45,7 +51,8 @@ const ConsolePage = () => {
             <ST.FieldWrapper>
               <ST.FieldHeader>Запрос:</ST.FieldHeader>
               <RequestField
-                request={request}
+                requestBody={requestBody}
+                setRequestBody={setRequestBody}
               />
             </ST.FieldWrapper>
 
@@ -61,9 +68,16 @@ const ConsolePage = () => {
             width={'120px'}
             height={'40px'}
             placeholder={'Отправить'}
-            onClick={() => console.log('Отправить')}
+            onClick={() => request(JSON.parse(requestBody))}
             loading={false}
           />
+          <ST.GitHubLink>@link-to-my-github</ST.GitHubLink>
+          <ST.FormatJSON
+            onClick={formatRequestField}
+          >
+            <Icon id={'format-json'}/>
+            Форматировать
+          </ST.FormatJSON>
         </ST.Footer>
       </ST.ConsolePage>
     </FullScreen>

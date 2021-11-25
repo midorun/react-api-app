@@ -1,55 +1,22 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
-import JSONEditor, { JSONEditorOptions } from 'jsoneditor'
-import { useActions } from 'store/hooks'
-import request from 'store/reducers/request'
-import { TRequest, TRequestState } from 'types'
+import React, { Dispatch, FC, SetStateAction } from 'react'
+import { TRequest } from 'types'
 
 import * as ST from './styled'
-/* eslint-disable */
-const initialJson = {
-  'action': 'pong',
-}
-/* eslint-enable */
-
-const jsonEditorOptions: JSONEditorOptions = {
-  mode: 'text',
-  mainMenuBar: false,
-  navigationBar: false,
-  statusBar: false,
-  search: false
-}
 
 export type TRequestFieldProps = {
-  request: TRequest | null
+  requestBody: TRequest | any,
+  setRequestBody: Dispatch<SetStateAction<string>>
 }
 
-const RequestField: FC<TRequestFieldProps> = () => {
-  const [jsonEditor, setJsonEditor] = useState<JSONEditor>()
-  const requestFieldRef = useRef<HTMLDivElement>(null)
-  const { request } = useActions()
-
-  useEffect(() => {
-    jsonEditor?.destroy()
-
-    jsonEditorOptions.onChange = () => {
-      console.log(jsonEditor?.get())
-    }
-
-    if (requestFieldRef.current) {
-      setJsonEditor(new JSONEditor(requestFieldRef.current, jsonEditorOptions, initialJson))
-      setTimeout(() => {
-        console.log(jsonEditor?.get())
-      }, 1000)
-    }
-
-    return () => {
-      jsonEditor?.destroy()
-    }
-  }, [])
+const RequestField: FC<TRequestFieldProps> = ({ requestBody, setRequestBody }) => {
+  const handleRequestFieldChange = (newValue: string) => {
+    setRequestBody(newValue)
+  }
 
   return (
     <ST.RequestField
-      ref={requestFieldRef}
+      onChange={(e) => handleRequestFieldChange(e.target.value)}
+      value={requestBody}
     />
   )
 }

@@ -5,7 +5,7 @@ const requestHistoryLimit = 15
 
 const initialState: TRequestState = {
   loading: false,
-  request: null,
+  requestValue: { action: 'pong' },
   response: null,
   error: null,
   history: []
@@ -17,7 +17,7 @@ const requestSlice = createSlice({
   reducers: {
     request (state, action: PayloadAction<TRequest>) {
       state.loading = true
-      state.request = action.payload
+      state.requestValue = action.payload
     },
     requestSuccess (state, action: PayloadAction<TResponse>) {
       state.loading = false
@@ -33,7 +33,7 @@ const requestSlice = createSlice({
       // let { history } = state
       //
       //
-      // const uniqueRequest = history?.find(historyItem => historyItem.action === state.request)
+      // const uniqueRequest = history?.find(historyItem => historyItem.action === state.requestValue)
       //
       // if (uniqueRequest) {
       //   history = history?.filter(historyItem => historyItem.action === uniqueRequest.action)
@@ -44,9 +44,9 @@ const requestSlice = createSlice({
     },
     removeRequestFromHistory (state, action: PayloadAction<TResponse>) {
       // let { history } = state
-      // const { request, success } = action.payload
+      // const { requestValue, success } = action.payload
       //
-      // history = history?.filter(historyItem => historyItem.request !== request)
+      // history = history?.filter(historyItem => historyItem.requestValue !== requestValue)
     },
     clearHistory (state) {
       state.history = []

@@ -24,7 +24,6 @@ const Index = () => {
   }, [isLoggedIn])
 
   const onSubmit = ({ login, sublogin, password }: TAuthPayload) => {
-    console.log('submit')
     authenticate({
       login,
       sublogin,

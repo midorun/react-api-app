@@ -28,7 +28,18 @@ export const FieldHeader = styled.span`
 
 export const Footer = styled.div`
   display: flex;
+  justify-content: space-between;
   padding: 15px;
   height: 70px;
   background: ${ECOLORS.WHITE};
+`
+
+export const GitHubLink = styled.a`
+  color: ${ECOLORS.BORDER_GRAY};
+`
+
+export const FormatJSON = styled.div`
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
 `
