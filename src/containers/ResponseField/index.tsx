@@ -6,9 +6,7 @@ export type TResponseFieldProps = {}
 
 const ResponseField: FC<TResponseFieldProps> = () => {
   return (
-        <ST.ResponseField>
-
-        </ST.ResponseField>
+    <ST.ResponseField />
   )
 }
 

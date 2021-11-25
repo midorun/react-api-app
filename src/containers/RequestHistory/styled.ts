@@ -8,7 +8,6 @@ export const RequestHistory = styled.div`
   align-items: center;
   border-bottom: 1px solid ${ECOLORS.BORDER_GRAY};
   overflow-x: scroll;
-  overflow-y: visible;
 
   &::-webkit-scrollbar {
     display: none;

@@ -18,6 +18,8 @@ export const Button = styled.button<TButtonProps>`
   line-height: 30px;
   color: ${ECOLORS.WHITE};
   cursor: pointer;
+  width: ${({ width }) => width || 'auto'};
+  height: ${({ height }) => height || 'auto'};
 
   ${LoginPageWrapper} & {
     margin-top: 20px;
