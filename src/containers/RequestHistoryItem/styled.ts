@@ -1,5 +1,5 @@
 import { ECOLORS } from 'constants/colors'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 export const RequestHistoryItem = styled.div`
   position: relative;

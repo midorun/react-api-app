@@ -16,8 +16,7 @@ const ConsolePage = () => {
   const { authenticateCheck } = useActions()
   const [requestFieldWidth, setRequestFieldWidth] = useState<string | number>('50%')
   const { login } = useAppSelector(state => state.auth)
-  const [request, setRequest] = useState<string | undefined>()
-
+  const { request } = useAppSelector(state => state.request)
   useEffect(() => {
     authenticateCheck()
     if (!login) {
@@ -47,7 +46,7 @@ const ConsolePage = () => {
               <ST.FieldHeader>Запрос:</ST.FieldHeader>
               <RequestField
                 request={request}
-                changeRequest={setRequest}/>
+              />
             </ST.FieldWrapper>
 
           </Resizable>

@@ -24,6 +24,7 @@ const Index = () => {
   }, [isLoggedIn])
 
   const onSubmit = ({ login, sublogin, password }: TAuthPayload) => {
+    console.log('submit')
     authenticate({
       login,
       sublogin,
@@ -74,7 +75,7 @@ const Index = () => {
               validate={composeValidators(required, withoutCyrillic)}
             />
             <Submit
-              onClick={form.reset}
+              onClick={() => form.submit()}
               placeholder={ELoginPageConstants.SUBMIT}
               loading={loading}
               disabled={pristine || hasValidationErrors}

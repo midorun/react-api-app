@@ -19,6 +19,7 @@ export const RequestHistoryList = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  width: calc(100% - 55px);
 `
 
 export const ClearHistory = styled.div`

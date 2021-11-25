@@ -2,8 +2,9 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import auth from 'store/reducers/auth'
 
+import auth from 'store/reducers/auth'
+import request from 'store/reducers/request'
 import rootSaga from 'store/sagas'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -13,8 +14,9 @@ const persistConfig = {
   storage
 }
 
-export const rootReducer = combineReducers({
-  auth: persistReducer(persistConfig, auth)
+const rootReducer = combineReducers({
+  auth: persistReducer(persistConfig, auth),
+  request: persistReducer(persistConfig, request)
 })
 
 export const store = configureStore({

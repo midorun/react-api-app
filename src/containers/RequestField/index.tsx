@@ -1,11 +1,13 @@
-import React, { ChangeEvent, FC, Ref, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import JSONEditor, { JSONEditorOptions } from 'jsoneditor'
-import internal from 'stream'
+import { useActions } from 'store/hooks'
+import request from 'store/reducers/request'
+import { TRequest, TRequestState } from 'types'
 
 import * as ST from './styled'
 /* eslint-disable */
 const initialJson = {
-  "action":"pong",
+  'action': 'pong',
 }
 /* eslint-enable */
 
@@ -18,21 +20,26 @@ const jsonEditorOptions: JSONEditorOptions = {
 }
 
 export type TRequestFieldProps = {
-  request: string | undefined,
-  changeRequest: (request: string | undefined) => void
-
+  request: TRequest | null
 }
 
-const RequestField: FC<TRequestFieldProps> = ({ request, changeRequest }) => {
+const RequestField: FC<TRequestFieldProps> = () => {
   const [jsonEditor, setJsonEditor] = useState<JSONEditor>()
   const requestFieldRef = useRef<HTMLDivElement>(null)
+  const { request } = useActions()
 
   useEffect(() => {
     jsonEditor?.destroy()
 
+    jsonEditorOptions.onChange = () => {
+      console.log(jsonEditor?.get())
+    }
+
     if (requestFieldRef.current) {
       setJsonEditor(new JSONEditor(requestFieldRef.current, jsonEditorOptions, initialJson))
-      console.log(jsonEditor?.get())
+      setTimeout(() => {
+        console.log(jsonEditor?.get())
+      }, 1000)
     }
 
     return () => {
@@ -41,9 +48,9 @@ const RequestField: FC<TRequestFieldProps> = ({ request, changeRequest }) => {
   }, [])
 
   return (
-      <ST.RequestField
-        ref={requestFieldRef}
-      />
+    <ST.RequestField
+      ref={requestFieldRef}
+    />
   )
 }
 
