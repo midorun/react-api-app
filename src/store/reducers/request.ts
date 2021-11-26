@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TRequest, TRequestState, TResponse } from 'types'
+import { TFullfilledRequest, TRequest, TRequestState } from 'types'
 
 const requestHistoryLimit = 15
 
 const initialState: TRequestState = {
   loading: false,
-  requestValue: { action: 'pong' },
-  response: null,
   error: null,
-  history: []
+  history: null,
+  lastFullfilledRequest: null
 }
 
 const requestSlice = createSlice({
@@ -17,39 +16,38 @@ const requestSlice = createSlice({
   reducers: {
     request (state, action: PayloadAction<TRequest>) {
       state.loading = true
-      state.requestValue = action.payload
     },
-    requestSuccess (state, action: PayloadAction<TResponse>) {
+    requestSuccess (state) {
       state.loading = false
       state.error = false
-      state.response = action.payload
     },
-    requestFailure (state, action: PayloadAction<TResponse>) {
+    requestFailure (state) {
       state.loading = false
       state.error = true
-      state.response = action.payload
     },
-    addRequestToHistory (state, action: PayloadAction<TResponse>) {
-      // let { history } = state
-      //
-      //
-      // const uniqueRequest = history?.find(historyItem => historyItem.action === state.requestValue)
-      //
-      // if (uniqueRequest) {
-      //   history = history?.filter(historyItem => historyItem.action === uniqueRequest.action)
-      //   history?.unshift(uniqueRequest)
-      // } else {
-      //   history?.push()
-      // }
+    addRequestToHistory (state, action: PayloadAction<TFullfilledRequest>) {
+      state.lastFullfilledRequest = action.payload
+      if (!state.history) {
+        state.history = []
+        state.history.push(action.payload)
+      } else {
+        const nonUniqueRequest = state.history?.find(historyItem => historyItem.request.action === action.payload.request.action)
+
+        if (nonUniqueRequest && state.history) {
+          state.history = state.history?.filter(historyItem => historyItem.request.action !== nonUniqueRequest.request.action)
+          state.history.unshift(nonUniqueRequest)
+        } else {
+          state.history?.push(action.payload)
+        }
+      }
     },
-    removeRequestFromHistory (state, action: PayloadAction<TResponse>) {
-      // let { history } = state
-      // const { requestValue, success } = action.payload
-      //
-      // history = history?.filter(historyItem => historyItem.requestValue !== requestValue)
+    removeRequestFromHistory (state, action: PayloadAction<TRequest>) {
+      if (state.history) {
+        state.history = state.history.filter(item => item.request.action !== action.payload.action)
+      }
     },
     clearHistory (state) {
-      state.history = []
+      state.history = null
     }
   }
 })

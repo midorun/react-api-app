@@ -41,7 +41,7 @@ const reactRefreshOverlayEntry = require.resolve(
   'react-dev-utils/refreshOverlayInterop'
 )
 
-// Some apps do not need the benefits of saving a web requestValue, so not inlining the chunk
+// Some apps do not need the benefits of saving a web requestBody, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false'
 
@@ -584,7 +584,7 @@ module.exports = function (webpackEnv) {
         )
       ),
       // Inlines the webpack runtime script. This script is too small to warrant
-      // a network requestValue.
+      // a network requestBody.
       // https://github.com/facebook/create-react-app/issues/5358
       isEnvProduction &&
         shouldInlineRuntimeChunk &&

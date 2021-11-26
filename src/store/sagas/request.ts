@@ -1,38 +1,34 @@
 
 import { PayloadAction } from '@reduxjs/toolkit'
 import api from 'helpers/sendsay'
-import { all, put, takeLatest } from 'redux-saga/effects'
+import { all, put, takeLatest, call } from 'redux-saga/effects'
 import { requestActions } from 'store/reducers/request'
 import { TRequest } from 'types'
 
 const { requestSuccess, requestFailure, addRequestToHistory, request } = requestActions
 
 export function * requestSaga (action: PayloadAction<TRequest>) {
-  let response
-
   try {
-    yield api.sendsay
-      .request(action.payload)
-      .then((res: any) => {
-        requestSuccess({
-          res
-        })
-      })
-
-    // yield put(requestSuccess({
-    //   response
-    // }))
-
-    // yield put(
-    //   addRequestToHistory({
-    //     ...action.payload
-    //   })
-    // )
-  } catch (e) {
+    const response = yield call(api.sendsay.request, action.payload)
+    yield put(requestSuccess())
     yield put(
-      requestFailure({
-        ...action.payload
-      })
+      addRequestToHistory(
+        {
+          request: action.payload,
+          response: response,
+          error: null
+        })
+    )
+  } catch (e) {
+    console.log(e)
+    yield put(requestFailure())
+    yield put(
+      addRequestToHistory(
+        {
+          request: action.payload,
+          response: null,
+          error: e
+        })
     )
   }
 }

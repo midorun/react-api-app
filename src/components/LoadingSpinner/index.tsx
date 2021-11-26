@@ -1,4 +1,4 @@
-import loadingSpinnerRoute from '../../assets/loadingSpinner.gif'
+import loadingSpinnerRoute from 'assets/loadingSpinner.gif'
 
 const LoadingSpinner = () => {
   return (

@@ -19,7 +19,7 @@ const Icon: FC<TIconProps> = ({ id, className, width, height }) => {
       width={width}
       height={height}
     >
-      <use xlinkHref={`${iconsRoute}#${id}`} />
+      <use xlinkHref={`${iconsRoute}#${id}`}/>
     </ST.svg>
   )
 }

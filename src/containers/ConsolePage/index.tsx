@@ -13,14 +13,27 @@ import * as ST from './styled'
 const ConsolePage = () => {
   const navigate = useNavigate()
   const fullscreenHandle = useFullScreenHandle()
-  const { authenticateCheck } = useActions()
+  const { authenticateCheck, request } = useActions()
   const [requestFieldWidth, setRequestFieldWidth] = useState<string | number>('50%')
   const { login } = useAppSelector(state => state.auth)
-  const { request } = useActions()
   const [requestBody, setRequestBody] = useState('{ "action": "pong" }')
+  const [parsingError, setParsingError] = useState(false)
+  const [formatIconId, setFormatIconId] = useState('format-json')
 
-  const formatRequestField = () => {
-    setRequestBody(JSON.stringify(JSON.parse(requestBody), null, 2))
+  const formatRequestBody = () => {
+    setRequestBody(JSON.stringify(parseRequestBody(), null, 2))
+  }
+
+  const parseRequestBody = () => {
+    try {
+      const parsedJSONBody = JSON.parse(requestBody)
+      setParsingError(false)
+      return parsedJSONBody
+    } catch (e) {
+      console.log(e)
+      setParsingError(true)
+      return requestBody
+    }
   }
 
   useEffect(() => {
@@ -29,6 +42,10 @@ const ConsolePage = () => {
       navigate('/')
     }
   }, [login])
+
+  useEffect(() => {
+    formatRequestBody()
+  }, [])
 
   return (
     <FullScreen handle={fullscreenHandle}>
@@ -51,8 +68,9 @@ const ConsolePage = () => {
             <ST.FieldWrapper>
               <ST.FieldHeader>Запрос:</ST.FieldHeader>
               <RequestField
-                requestBody={requestBody}
                 setRequestBody={setRequestBody}
+                setParsingError={setParsingError}
+                parsingError={parsingError}
               />
             </ST.FieldWrapper>
 
@@ -68,14 +86,16 @@ const ConsolePage = () => {
             width={'120px'}
             height={'40px'}
             placeholder={'Отправить'}
-            onClick={() => request(JSON.parse(requestBody))}
+            onClick={() => request(parseRequestBody())}
             loading={false}
           />
           <ST.GitHubLink>@link-to-my-github</ST.GitHubLink>
           <ST.FormatJSON
-            onClick={formatRequestField}
+            onMouseEnter={() => setFormatIconId('format-json-blue')}
+            onMouseLeave={() => setFormatIconId('format-json')}
+            onClick={formatRequestBody}
           >
-            <Icon id={'format-json'}/>
+            <Icon id={formatIconId}/>
             Форматировать
           </ST.FormatJSON>
         </ST.Footer>

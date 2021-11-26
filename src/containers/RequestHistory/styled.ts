@@ -7,11 +7,9 @@ export const RequestHistory = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid ${ECOLORS.BORDER_GRAY};
-  overflow-x: scroll;
+ 
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+ 
 
 `
 
@@ -20,6 +18,12 @@ export const RequestHistoryList = styled.div`
   align-items: center;
   gap: 10px;
   width: calc(100% - 55px);
+  overflow-x: scroll;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const ClearHistory = styled.div`

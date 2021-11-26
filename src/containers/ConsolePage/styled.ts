@@ -42,4 +42,13 @@ export const FormatJSON = styled.div`
   display: flex;
   gap: 10px;
   cursor: pointer;
+  
+  &:hover{
+    color: ${ECOLORS.BLUE};
+  }
+  
+  &:focus{
+    border: 1px solid ${ECOLORS.BLUE};
+  }
+  
 `

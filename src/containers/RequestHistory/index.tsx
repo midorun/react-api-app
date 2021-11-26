@@ -3,6 +3,7 @@ import { horizontalScroll } from 'helpers/eventListeners'
 import React, { FC, useEffect, useRef } from 'react'
 
 import { Icon } from 'components'
+import { useActions, useAppSelector } from 'store/hooks'
 
 import * as ST from './styled'
 
@@ -10,6 +11,8 @@ export type TRequestHistoryProps = {}
 
 const RequestHistory: FC<TRequestHistoryProps> = () => {
   const requestHistoryListRef = useRef<HTMLDivElement | null>(null)
+  const { history } = useAppSelector(state => state.request)
+  const { clearHistory } = useActions()
 
   useEffect(() => {
     requestHistoryListRef.current?.addEventListener('wheel', function (e) {
@@ -24,11 +27,18 @@ const RequestHistory: FC<TRequestHistoryProps> = () => {
   }, [requestHistoryListRef.current])
 
   return (
-    <ST.RequestHistory ref={requestHistoryListRef}>
-     <ST.RequestHistoryList >
-       <RequestHistoryItem />
-     </ST.RequestHistoryList>
-      <ST.ClearHistory>
+    <ST.RequestHistory >
+      <ST.RequestHistoryList ref={requestHistoryListRef}>
+        {history?.map(item => {
+          return (
+            <RequestHistoryItem
+              key={item.request.action}
+              data={item}
+            />
+          )
+        })}
+      </ST.RequestHistoryList>
+      <ST.ClearHistory onClick={() => clearHistory()}>
         <ST.IconWrapper>
           <Icon id={'cross'} />
         </ST.IconWrapper>

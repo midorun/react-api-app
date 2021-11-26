@@ -26,19 +26,19 @@ export type TAuthState = {
 
 export type TRequestState = {
   loading: boolean,
-  requestValue: TRequest,
-  response: any | null,
   error: unknown | null,
-  history: TRequest[]
+  history: TFullfilledRequest[] | null,
+  lastFullfilledRequest: TFullfilledRequest | null
 }
 
 export type TRequest = {
-  action: string
+  action: string,
+  [key: string]: any
 }
 
-export type TResponse = unknown
+export type TFullfilledRequest = {
+  request: TRequest,
+  response: any,
+  error: any,
 
-// export type TResponse = {
-//   requestId: string
-//   duration: null | string
-// }
+}

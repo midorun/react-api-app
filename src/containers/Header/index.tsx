@@ -42,7 +42,7 @@ const Header:FC<THeaderProps> = ({ fullScreenHandle }) => {
           }
         </ST.User>
 
-        <ST.Logout onClick={logout}>
+        <ST.Logout onClick={() => logout()}>
           <ST.Exit>{EHeaderConstants.EXIT} </ST.Exit>
           <Icon id={'log-out'} />
         </ST.Logout>
