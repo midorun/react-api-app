@@ -30,7 +30,7 @@ const RequestHistoryItem: FC<TRequestHistoryItemProps> = ({ data: { request, res
     <ST.RequestHistoryItem
       ref={requestHistoryItemRef}
     >
-      <ST.Status error={error === null} />
+      <ST.Status error={error !== null} />
       <ST.Action>
         {request.action}
       </ST.Action>
