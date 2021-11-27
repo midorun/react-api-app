@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { Resizable } from 're-resizable'
@@ -7,32 +7,41 @@ import { Submit, Icon } from 'components'
 import ResponseField from 'containers/ResponseField'
 import { useActions, useAppSelector } from 'store/hooks'
 import { Header, RequestHistory, RequestField } from 'containers'
+import { TRequest } from 'types'
 
 import * as ST from './styled'
 
 const ConsolePage = () => {
   const navigate = useNavigate()
   const fullscreenHandle = useFullScreenHandle()
-  const { authenticateCheck, request } = useActions()
+  const { authenticateCheck, requestSend } = useActions()
   const [requestFieldWidth, setRequestFieldWidth] = useState<string | number>('50%')
   const { login } = useAppSelector(state => state.auth)
+  const { lastFullfilledRequest } = useAppSelector(state => state.request)
+
+  const [isRequestBodyValidJSON, setIsRequestBodyValidJSON] = useState(true)
   const [requestBody, setRequestBody] = useState('{ "action": "pong" }')
-  const [parsingError, setParsingError] = useState(false)
   const [formatIconId, setFormatIconId] = useState('format-json')
 
-  const formatRequestBody = () => {
-    setRequestBody(JSON.stringify(parseRequestBody(), null, 2))
+  const formatRequestBody = (requestBody: TRequest) => {
+    setRequestBody(JSON.stringify(requestBody, null, 2))
   }
 
-  const parseRequestBody = () => {
+  const handleSubmitBtnClick = () => {
+    checkRequestBodyOnValidJSON(requestBody)
+    if (isRequestBodyValidJSON) {
+      requestSend(JSON.parse(requestBody))
+    }
+  }
+
+  const checkRequestBodyOnValidJSON = (requestBody: string) => {
     try {
       const parsedJSONBody = JSON.parse(requestBody)
-      setParsingError(false)
+      setIsRequestBodyValidJSON(true)
       return parsedJSONBody
     } catch (e) {
       console.log(e)
-      setParsingError(true)
-      return requestBody
+      setIsRequestBodyValidJSON(false)
     }
   }
 
@@ -44,8 +53,10 @@ const ConsolePage = () => {
   }, [login])
 
   useEffect(() => {
-    formatRequestBody()
-  }, [])
+    if (lastFullfilledRequest) {
+      setRequestBody(JSON.stringify(lastFullfilledRequest.request, null, 2))
+    }
+  }, [lastFullfilledRequest])
 
   return (
     <FullScreen handle={fullscreenHandle}>
@@ -68,9 +79,10 @@ const ConsolePage = () => {
             <ST.FieldWrapper>
               <ST.FieldHeader>Запрос:</ST.FieldHeader>
               <RequestField
+                requestBody={requestBody}
                 setRequestBody={setRequestBody}
-                setParsingError={setParsingError}
-                parsingError={parsingError}
+                setIsRequestBodyValidJSON={setIsRequestBodyValidJSON}
+                isRequestBodyValidJSON={isRequestBodyValidJSON}
               />
             </ST.FieldWrapper>
 
@@ -86,14 +98,14 @@ const ConsolePage = () => {
             width={'120px'}
             height={'40px'}
             placeholder={'Отправить'}
-            onClick={() => request(parseRequestBody())}
+            onClick={() => handleSubmitBtnClick()}
             loading={false}
           />
           <ST.GitHubLink>@link-to-my-github</ST.GitHubLink>
           <ST.FormatJSON
             onMouseEnter={() => setFormatIconId('format-json-blue')}
             onMouseLeave={() => setFormatIconId('format-json')}
-            onClick={formatRequestBody}
+            onClick={() => formatRequestBody(JSON.parse(requestBody))}
           >
             <Icon id={formatIconId}/>
             Форматировать

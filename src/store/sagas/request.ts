@@ -1,11 +1,16 @@
-
 import { PayloadAction } from '@reduxjs/toolkit'
 import api from 'helpers/sendsay'
 import { all, put, takeLatest, call } from 'redux-saga/effects'
+
 import { requestActions } from 'store/reducers/request'
 import { TRequest } from 'types'
 
-const { requestSuccess, requestFailure, addRequestToHistory, request } = requestActions
+const {
+  requestSuccess,
+  requestFailure,
+  addRequestToHistory,
+  requestSend
+} = requestActions
 
 export function * requestSaga (action: PayloadAction<TRequest>) {
   try {
@@ -35,6 +40,6 @@ export function * requestSaga (action: PayloadAction<TRequest>) {
 
 export default function * root () {
   yield all([
-    takeLatest(request.type, requestSaga)
+    takeLatest(requestSend.type, requestSaga)
   ])
 }

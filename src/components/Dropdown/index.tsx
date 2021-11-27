@@ -1,3 +1,4 @@
+import { animationDelaySec, animationDurationSec } from 'containers/RequestHistoryItem/styled'
 import React, { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { useActions, useAppSelector } from 'store/hooks'
 import { TRequest } from 'types'
@@ -5,12 +6,13 @@ import { TRequest } from 'types'
 import * as ST from './styled'
 
 export type TDropdownProps = {
-  requestBody: TRequest
+  requestBody: any
   setShowDropdown: Dispatch<SetStateAction<boolean>>
+  setShowCopyConfirmation: Dispatch<SetStateAction<boolean>>
 }
 
-const Dropdown: FC<TDropdownProps> = ({ setShowDropdown, requestBody }) => {
-  const { request, removeRequestFromHistory } = useActions()
+const Dropdown: FC<TDropdownProps> = ({ setShowDropdown, requestBody, setShowCopyConfirmation }) => {
+  const { requestSend, removeRequestFromHistory } = useActions()
 
   useEffect(() => {
     document.addEventListener('click', hideDropdown)
@@ -25,15 +27,17 @@ const Dropdown: FC<TDropdownProps> = ({ setShowDropdown, requestBody }) => {
   }
 
   const handleExecuteClick = () => {
-    request(requestBody)
+    requestSend(requestBody)
   }
 
   const handleCopyClick = () => {
     navigator.clipboard.writeText(JSON.stringify(requestBody, null, 2))
+    setShowCopyConfirmation(true)
+    setTimeout(() => setShowCopyConfirmation(false), (animationDurationSec + animationDelaySec) * 1000)
   }
 
   const handleDeleteClick = () => {
-    removeRequestFromHistory(requestBody)
+    removeRequestFromHistory(JSON.parse(requestBody))
   }
 
   return (

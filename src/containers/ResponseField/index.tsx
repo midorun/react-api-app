@@ -7,16 +7,21 @@ export type TResponseFieldProps = {}
 
 const ResponseField: FC<TResponseFieldProps> = () => {
   const { lastFullfilledRequest } = useAppSelector(state => state.request)
-  const [value, setValue] = useState<string>()
+  const [value, setValue] = useState()
 
   useEffect(() => {
-    lastFullfilledRequest ? setValue(JSON.stringify(lastFullfilledRequest.response, null, 2)) : setValue('')
+    if (lastFullfilledRequest) {
+      lastFullfilledRequest.response
+        ? setValue(lastFullfilledRequest.response)
+        : setValue(lastFullfilledRequest.error)
+    }
   }, [lastFullfilledRequest])
 
   return (
     <ST.ResponseField
+      isRequestBodyValidJSON={lastFullfilledRequest?.error}
       readOnly
-      value={value}
+      value={JSON.stringify(value, null, 2)}
     />
   )
 }

@@ -26,8 +26,9 @@ export type TAuthState = {
 
 export type TRequestState = {
   loading: boolean,
-  error: unknown | null,
   history: TFullfilledRequest[] | null,
+  error: unknown | null,
+  requestBody: string,
   lastFullfilledRequest: TFullfilledRequest | null
 }
 

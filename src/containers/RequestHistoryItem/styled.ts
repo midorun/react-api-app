@@ -1,11 +1,13 @@
 import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
 
+export const requestHistoryItemVerticalPadding = 5
+export const requestHistoryItemHeight = 30
+
 export const RequestHistoryItem = styled.div`
   position: relative;
-  padding: 5px 10px;
-  height: 30px;
-  min-width: 133px;
+  padding: ${requestHistoryItemVerticalPadding}px 10px;
+  height: ${requestHistoryItemHeight}px;
   display: flex;
   gap: 15px;
   align-items: center;
@@ -18,7 +20,7 @@ export const Status = styled.div<{ error: boolean }>`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: ${({ error }) => error ? ECOLORS.GREEN : ECOLORS.RED};
+  background: ${({ error }) => error ? ECOLORS.RED : ECOLORS.GREEN};
 `
 
 export const Action = styled.div`
@@ -34,13 +36,19 @@ export const ShowDropdownIcon = styled.div`
   cursor: pointer;
 `
 
-export const Dropdown = styled.div`
+export const animationDurationSec = 3
+export const animationDelaySec = 3
+
+export const CopyConfirmation = styled.span`
   position: absolute;
-  padding: 5px 0;
-  width: 100%;
-  height: 140px;
-  left: 0;
-  top: 30px;
-  border-radius: 3px;
-  background: black;
+  justify-content: center;
+  font-size: 12px;
+  background: ${ECOLORS.GRAY_BLUE};
+  animation: antMoveUpOut ${animationDurationSec}s;
+  animation-delay: ${animationDelaySec}s;
+  
+  @keyframes antMoveUpOut{
+    from { top: ${requestHistoryItemVerticalPadding}px}
+    to {top: -${requestHistoryItemHeight + requestHistoryItemVerticalPadding}px}
+  }
 `

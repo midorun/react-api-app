@@ -6,6 +6,7 @@ const requestHistoryLimit = 15
 const initialState: TRequestState = {
   loading: false,
   error: null,
+  requestBody: '{ "action": "pong" }',
   history: null,
   lastFullfilledRequest: null
 }
@@ -14,7 +15,7 @@ const requestSlice = createSlice({
   name: 'request',
   initialState,
   reducers: {
-    request (state, action: PayloadAction<TRequest>) {
+    requestSend (state, action: PayloadAction<TRequest>) {
       state.loading = true
     },
     requestSuccess (state) {
@@ -48,6 +49,9 @@ const requestSlice = createSlice({
     },
     clearHistory (state) {
       state.history = null
+    },
+    changeRequestBody (state, action: PayloadAction<TRequest>) {
+      state.requestBody = JSON.stringify(action.payload, null, 2)
     }
   }
 })

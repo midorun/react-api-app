@@ -6,7 +6,7 @@ import * as ST from './styled'
 export type TModalProps = {
   top: string,
   left: string,
-  width: string,
+  width?: string,
 }
 
 const Modal: FC<TModalProps> = ({ children, ...positioning }) => {
