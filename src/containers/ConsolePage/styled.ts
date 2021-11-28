@@ -36,19 +36,30 @@ export const Footer = styled.div`
 
 export const GitHubLink = styled.a`
   color: ${ECOLORS.BORDER_GRAY};
+  display: flex;
+  align-items: center;
 `
 
 export const FormatJSON = styled.div`
+  padding: 5px;
   display: flex;
+  align-items: center;
   gap: 10px;
   cursor: pointer;
+  user-select: none;
+  border: 2px solid ${ECOLORS.WHITE};
   
   &:hover{
     color: ${ECOLORS.BLUE};
+    
+    svg{
+      stroke: ${ECOLORS.BLUE};
+    }
   }
   
-  &:focus{
-    border: 1px solid ${ECOLORS.BLUE};
+  &:active{
+    border: 2px solid #45A5FF;
+    border-radius: 7px;
   }
   
 `

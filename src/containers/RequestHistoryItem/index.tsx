@@ -1,6 +1,7 @@
 import { Icon } from 'components'
 import Dropdown from 'components/Dropdown'
 import Modal from 'components/Modal'
+import { ECONSOLE_PAGE } from 'containers/ConsolePage/constants'
 import React, { FC, useRef, useState } from 'react'
 import { TFullfilledRequest } from 'types'
 
@@ -10,20 +11,17 @@ export type TRequestHistoryItemProps = {
   data: TFullfilledRequest
 }
 
-const RequestHistoryItem: FC<TRequestHistoryItemProps> = ({ data: { request, response, error } }) => {
+const RequestHistoryItem: FC<TRequestHistoryItemProps> = ({ data: { request, error } }) => {
   const [showDropdown, setShowDropdown] = useState(false)
   const requestHistoryItemRef = useRef<HTMLDivElement>(null)
   const [top, setTop] = useState(0)
   const [left, setLeft] = useState(0)
-  const [width, setWidth] = useState(0)
   const [showCopyConfirmation, setShowCopyConfirmation] = useState(false)
 
   const handleDropdownIconClick = () => {
     setShowDropdown(!showDropdown)
     setTop(requestHistoryItemRef.current!.getBoundingClientRect().top)
     setLeft(requestHistoryItemRef.current!.getBoundingClientRect().left)
-    setWidth(requestHistoryItemRef.current!.getBoundingClientRect().width)
-    console.log(requestHistoryItemRef.current!.getBoundingClientRect())
   }
 
   return (
@@ -55,7 +53,7 @@ const RequestHistoryItem: FC<TRequestHistoryItemProps> = ({ data: { request, res
       )}
       {showCopyConfirmation &&
       <ST.CopyConfirmation>
-        Скопировано
+        {ECONSOLE_PAGE.COPY_CONFIRMATION}
       </ST.CopyConfirmation>
       }
     </ST.RequestHistoryItem>

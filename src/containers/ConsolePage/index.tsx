@@ -1,3 +1,4 @@
+import { ECONSOLE_PAGE } from 'containers/ConsolePage/constants'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
@@ -18,10 +19,8 @@ const ConsolePage = () => {
   const [requestFieldWidth, setRequestFieldWidth] = useState<string | number>('50%')
   const { login } = useAppSelector(state => state.auth)
   const { lastFullfilledRequest } = useAppSelector(state => state.request)
-
   const [isRequestBodyValidJSON, setIsRequestBodyValidJSON] = useState(true)
   const [requestBody, setRequestBody] = useState('{ "action": "pong" }')
-  const [formatIconId, setFormatIconId] = useState('format-json')
 
   const formatRequestBody = (requestBody: TRequest) => {
     setRequestBody(JSON.stringify(requestBody, null, 2))
@@ -77,7 +76,7 @@ const ConsolePage = () => {
             enable={{ right: true }}
           >
             <ST.FieldWrapper>
-              <ST.FieldHeader>Запрос:</ST.FieldHeader>
+              <ST.FieldHeader>${ECONSOLE_PAGE.REQUEST_FIELD_TITLE}</ST.FieldHeader>
               <RequestField
                 requestBody={requestBody}
                 setRequestBody={setRequestBody}
@@ -89,7 +88,7 @@ const ConsolePage = () => {
           </Resizable>
 
           <ST.FieldWrapper>
-            <ST.FieldHeader>Ответ:</ST.FieldHeader>
+            <ST.FieldHeader>${ECONSOLE_PAGE.RESPONSE_FIELD_TITLE}</ST.FieldHeader>
             <ResponseField />
           </ST.FieldWrapper>
         </ST.FieldsWrapper>
@@ -101,14 +100,12 @@ const ConsolePage = () => {
             onClick={() => handleSubmitBtnClick()}
             loading={false}
           />
-          <ST.GitHubLink>@link-to-my-github</ST.GitHubLink>
+          <ST.GitHubLink>${ECONSOLE_PAGE.GITHUB_LINK}</ST.GitHubLink>
           <ST.FormatJSON
-            onMouseEnter={() => setFormatIconId('format-json-blue')}
-            onMouseLeave={() => setFormatIconId('format-json')}
             onClick={() => formatRequestBody(JSON.parse(requestBody))}
           >
-            <Icon id={formatIconId}/>
-            Форматировать
+            <Icon id={'format-json'}/>
+            ${ECONSOLE_PAGE.FORMAT}
           </ST.FormatJSON>
         </ST.Footer>
       </ST.ConsolePage>

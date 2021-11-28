@@ -47,7 +47,10 @@ const Header:FC<THeaderProps> = ({ fullScreenHandle }) => {
           <Icon id={'log-out'} />
         </ST.Logout>
         <ST.FullScreen onClick={handleFullScreenIconClick}>
-          <Icon id={'full-screen'} />
+          {fullScreenHandle.active
+            ? <Icon id={'window-screen'}/>
+            : <Icon id={'full-screen'}/>
+          }
         </ST.FullScreen>
 
       </ST.RightSide>

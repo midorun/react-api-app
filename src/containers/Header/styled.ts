@@ -68,4 +68,5 @@ export const FullScreen = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
 `
