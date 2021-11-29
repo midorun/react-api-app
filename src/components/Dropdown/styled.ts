@@ -1,5 +1,6 @@
-import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components'
+
+import { ECOLORS } from 'constants/colors'
 
 export const Dropdown = styled.div`
   padding: 5px 0;

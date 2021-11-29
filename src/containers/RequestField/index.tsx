@@ -1,5 +1,4 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
-import { useAppSelector } from 'store/hooks'
 
 import * as ST from './styled'
 

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import { TFullfilledRequest, TRequest, TRequestState } from 'types'
 
 const requestHistoryLimit = 15
@@ -41,6 +42,7 @@ const requestSlice = createSlice({
           state.history?.push(action.payload)
         }
       }
+      state.history.splice(0, requestHistoryLimit)
     },
     removeRequestFromHistory (state, action: PayloadAction<TRequest>) {
       if (state.history) {

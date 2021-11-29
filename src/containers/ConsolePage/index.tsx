@@ -1,13 +1,12 @@
-import { ECONSOLE_PAGE } from 'containers/ConsolePage/constants'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { Resizable } from 're-resizable'
 
 import { Submit, Icon } from 'components'
-import ResponseField from 'containers/ResponseField'
+import { Header, RequestHistory, RequestField, ResponseField } from 'containers'
+import { ECONSOLE_PAGE_TEXT } from 'containers/ConsolePage/constants'
 import { useActions, useAppSelector } from 'store/hooks'
-import { Header, RequestHistory, RequestField } from 'containers'
 import { TRequest } from 'types'
 
 import * as ST from './styled'
@@ -76,7 +75,7 @@ const ConsolePage = () => {
             enable={{ right: true }}
           >
             <ST.FieldWrapper>
-              <ST.FieldHeader>${ECONSOLE_PAGE.REQUEST_FIELD_TITLE}</ST.FieldHeader>
+              <ST.FieldHeader>${ECONSOLE_PAGE_TEXT.REQUEST_FIELD_TITLE}</ST.FieldHeader>
               <RequestField
                 requestBody={requestBody}
                 setRequestBody={setRequestBody}
@@ -88,7 +87,7 @@ const ConsolePage = () => {
           </Resizable>
 
           <ST.FieldWrapper>
-            <ST.FieldHeader>${ECONSOLE_PAGE.RESPONSE_FIELD_TITLE}</ST.FieldHeader>
+            <ST.FieldHeader>${ECONSOLE_PAGE_TEXT.RESPONSE_FIELD_TITLE}</ST.FieldHeader>
             <ResponseField />
           </ST.FieldWrapper>
         </ST.FieldsWrapper>
@@ -100,12 +99,12 @@ const ConsolePage = () => {
             onClick={() => handleSubmitBtnClick()}
             loading={false}
           />
-          <ST.GitHubLink>${ECONSOLE_PAGE.GITHUB_LINK}</ST.GitHubLink>
+          <ST.GitHubLink>${ECONSOLE_PAGE_TEXT.GITHUB_LINK}</ST.GitHubLink>
           <ST.FormatJSON
             onClick={() => formatRequestBody(JSON.parse(requestBody))}
           >
             <Icon id={'format-json'}/>
-            ${ECONSOLE_PAGE.FORMAT}
+            ${ECONSOLE_PAGE_TEXT.FORMAT}
           </ST.FormatJSON>
         </ST.Footer>
       </ST.ConsolePage>

@@ -1,8 +1,9 @@
+import React, { FC, useRef, useState } from 'react'
+
 import { Icon } from 'components'
 import Dropdown from 'components/Dropdown'
 import Modal from 'components/Modal'
-import { ECONSOLE_PAGE } from 'containers/ConsolePage/constants'
-import React, { FC, useRef, useState } from 'react'
+import { ECONSOLE_PAGE_TEXT } from 'containers/ConsolePage/constants'
 import { TFullfilledRequest } from 'types'
 
 import * as ST from './styled'
@@ -53,7 +54,7 @@ const RequestHistoryItem: FC<TRequestHistoryItemProps> = ({ data: { request, err
       )}
       {showCopyConfirmation &&
       <ST.CopyConfirmation>
-        {ECONSOLE_PAGE.COPY_CONFIRMATION}
+        {ECONSOLE_PAGE_TEXT.COPY_CONFIRMATION}
       </ST.CopyConfirmation>
       }
     </ST.RequestHistoryItem>

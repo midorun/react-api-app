@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro'
-import { IInputStyledProps } from '../Input'
+
+import { IInputStyledProps } from './index'
 
 interface LabelProps {
   optional?: boolean;

@@ -1,7 +1,8 @@
-import { animationDelaySec, animationDurationSec } from 'containers/RequestHistoryItem/styled'
 import React, { Dispatch, FC, SetStateAction, useEffect } from 'react'
-import { useActions, useAppSelector } from 'store/hooks'
-import { TRequest } from 'types'
+
+import { useActions } from 'store/hooks'
+import { EDROPDOWN_TEXT } from 'components/Dropdown/constants'
+import { animationDelaySec, animationDurationSec } from 'containers/RequestHistoryItem/styled'
 
 import * as ST from './styled'
 
@@ -42,9 +43,9 @@ const Dropdown: FC<TDropdownProps> = ({ setShowDropdown, requestBody, setShowCop
 
   return (
     <ST.Dropdown>
-      <ST.Execute onClick={handleExecuteClick}>Выполнить</ST.Execute>
-      <ST.Copy onClick={handleCopyClick}>Скопировать</ST.Copy>
-      <ST.Delete onClick={handleDeleteClick}>Удалить</ST.Delete>
+      <ST.Execute onClick={handleExecuteClick}>{EDROPDOWN_TEXT.EXECUTE}</ST.Execute>
+      <ST.Copy onClick={handleCopyClick}>{EDROPDOWN_TEXT.COPY}</ST.Copy>
+      <ST.Delete onClick={handleDeleteClick}>{EDROPDOWN_TEXT.DELETE}</ST.Delete>
     </ST.Dropdown>
   )
 }

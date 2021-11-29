@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import api from 'helpers/sendsay'
 import { all, put, takeLatest, call } from 'redux-saga/effects'
 
+import api from 'helpers/sendsay'
 import { requestActions } from 'store/reducers/request'
 import { TRequest } from 'types'
 

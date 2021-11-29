@@ -1,8 +1,8 @@
-import RequestHistoryItem from 'containers/RequestHistoryItem'
-import { horizontalScroll } from 'helpers/eventListeners'
 import React, { FC, useEffect, useRef } from 'react'
 
+import RequestHistoryItem from 'containers/RequestHistoryItem'
 import { Icon } from 'components'
+import { horizontalScroll } from 'helpers/eventListeners'
 import { useActions, useAppSelector } from 'store/hooks'
 
 import * as ST from './styled'
@@ -27,7 +27,7 @@ const RequestHistory: FC<TRequestHistoryProps> = () => {
   }, [requestHistoryListRef.current])
 
   return (
-    <ST.RequestHistory >
+    <ST.RequestHistory>
       <ST.RequestHistoryList ref={requestHistoryListRef}>
         {history?.map(item => {
           return (

@@ -7,10 +7,6 @@ export const RequestHistory = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid ${ECOLORS.BORDER_GRAY};
- 
-
- 
-
 `
 
 export const RequestHistoryList = styled.div`

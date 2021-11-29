@@ -1,8 +1,8 @@
-import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
 
-import { TButtonProps } from '../Submit'
 import { Wrapper as LoginPageWrapper } from 'containers/LoginPage/styled'
+import { TButtonProps } from './index'
+import { ECOLORS } from 'constants/colors'
 
 export const Button = styled.button<TButtonProps>`
   display: flex;

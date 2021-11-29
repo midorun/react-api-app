@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 import { Form, Field } from 'react-final-form'
 import { useNavigate } from 'react-router-dom'
 
-import { ELoginPageConstants } from 'containers/LoginPage/constants'
 import { composeValidators, required, withoutCyrillic } from 'helpers/validators'
 import { useActions, useAppSelector } from 'store/hooks'
 import { Input, Icon, Submit, Logo } from 'components'
+import { ELOGIN_PAGE_TEXT } from 'containers/LoginPage/constants'
 import { TAuthPayload } from 'types'
 
-import * as ST from 'containers/LoginPage/styled'
+import * as ST from './styled'
 
 const Index = () => {
   const navigate = useNavigate()
@@ -40,7 +40,7 @@ const Index = () => {
         onSubmit={onSubmit}
         render={({ handleSubmit, form, pristine, hasValidationErrors }) => (
           <ST.FormStyled onSubmit={handleSubmit}>
-            <ST.Header>{ELoginPageConstants.HEADER}</ST.Header>
+            <ST.Header>{ELOGIN_PAGE_TEXT.HEADER}</ST.Header>
             {
               authError &&
             <ST.Error>
@@ -49,7 +49,7 @@ const Index = () => {
               </ST.ErrorIcon>
               <ST.ErrorText>
                 <ST.ErrorTitle>
-                  {ELoginPageConstants.ERROR_TITLE}
+                  {ELOGIN_PAGE_TEXT.ERROR_TITLE}
                 </ST.ErrorTitle>
                 <ST.ErrorDescription>
                   {`id:${authError?.id}, explain:${authError?.explain}`}
@@ -64,18 +64,18 @@ const Index = () => {
             />
             <Field
               name='sublogin'
-              placeholder={ELoginPageConstants.SUBLOGIN}
+              placeholder={ELOGIN_PAGE_TEXT.SUBLOGIN}
               render={(props) => <Input {...props} type="text" label="Сублогин" optional />}
             />
             <Field
               name='password'
-              placeholder={ELoginPageConstants.PASSWORD}
+              placeholder={ELOGIN_PAGE_TEXT.PASSWORD}
               render={(props) => <Input {...props} type='password' label="Пароль" />}
               validate={composeValidators(required, withoutCyrillic)}
             />
             <Submit
               onClick={() => form.submit()}
-              placeholder={ELoginPageConstants.SUBMIT}
+              placeholder={ELOGIN_PAGE_TEXT.SUBMIT}
               loading={loading}
               disabled={pristine || hasValidationErrors}
             />

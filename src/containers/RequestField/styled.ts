@@ -1,5 +1,6 @@
-import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
+
+import { ECOLORS } from 'constants/colors'
 
 export const RequestField = styled.textarea<{isRequestBodyValidJSON: boolean}>`
   width: 100%;

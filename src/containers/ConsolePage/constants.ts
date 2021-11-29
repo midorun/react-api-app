@@ -1,4 +1,4 @@
-export enum ECONSOLE_PAGE {
+export enum ECONSOLE_PAGE_TEXT {
   REQUEST_FIELD_TITLE = 'Запрос:',
   RESPONSE_FIELD_TITLE = 'Ответ:',
   COPY_CONFIRMATION = 'Скопировано',

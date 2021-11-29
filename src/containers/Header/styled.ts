@@ -1,5 +1,6 @@
-import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
+
+import { ECOLORS } from 'constants/colors'
 
 export const Header = styled.div`
   padding: 10px 15px;

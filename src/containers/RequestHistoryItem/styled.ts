@@ -1,5 +1,6 @@
-import { ECOLORS } from 'constants/colors'
 import styled from 'styled-components/macro'
+
+import { ECOLORS } from 'constants/colors'
 
 export const requestHistoryItemVerticalPadding = 5
 export const requestHistoryItemHeight = 30
