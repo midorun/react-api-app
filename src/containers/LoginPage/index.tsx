@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
-import { Form, Field } from 'react-final-form'
+import { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Form, Field } from 'react-final-form'
 
 import { composeValidators, required, withoutCyrillic } from 'helpers/validators'
 import { useActions, useAppSelector } from 'store/hooks'
@@ -10,18 +10,16 @@ import { TAuthPayload } from 'types'
 
 import * as ST from './styled'
 
-const Index = () => {
+const LoginPage = () => {
+  // console.count('LoginPage')
   const navigate = useNavigate()
   const { authenticate } = useActions()
-  const loading = useAppSelector((state) => state.auth.loading)
-  const isLoggedIn = useAppSelector((state) => !!state.auth.sessionKey?.length)
-  const authError = useAppSelector(state => state.auth.error)
-
+  const { loading, error, sessionKey } = useAppSelector((state) => state.auth)
   useEffect(() => {
-    if (isLoggedIn) {
+    if (sessionKey) {
       navigate('/console')
     }
-  }, [isLoggedIn])
+  }, [sessionKey])
 
   const onSubmit = ({ login, sublogin, password }: TAuthPayload) => {
     authenticate({
@@ -42,20 +40,20 @@ const Index = () => {
           <ST.FormStyled onSubmit={handleSubmit}>
             <ST.Header>{ELOGIN_PAGE_TEXT.HEADER}</ST.Header>
             {
-              authError &&
-            <ST.Error>
-              <ST.ErrorIcon>
-                <Icon id='meh-face' />
-              </ST.ErrorIcon>
-              <ST.ErrorText>
-                <ST.ErrorTitle>
-                  {ELOGIN_PAGE_TEXT.ERROR_TITLE}
-                </ST.ErrorTitle>
-                <ST.ErrorDescription>
-                  {`id:${authError?.id}, explain:${authError?.explain}`}
-                </ST.ErrorDescription>
-              </ST.ErrorText>
-            </ST.Error>
+              error &&
+              <ST.Error>
+                <ST.ErrorIcon>
+                  <Icon id='meh-face' />
+                </ST.ErrorIcon>
+                <ST.ErrorText>
+                  <ST.ErrorTitle>
+                    {ELOGIN_PAGE_TEXT.ERROR_TITLE}
+                  </ST.ErrorTitle>
+                  <ST.ErrorDescription>
+                    {`id:${error?.id}, explain:${error?.explain}`}
+                  </ST.ErrorDescription>
+                </ST.ErrorText>
+              </ST.Error>
             }
             <Field
               name='login'
@@ -65,16 +63,16 @@ const Index = () => {
             <Field
               name='sublogin'
               placeholder={ELOGIN_PAGE_TEXT.SUBLOGIN}
-              render={(props) => <Input {...props} type="text" label="Сублогин" optional />}
+              render={(props) => <Input {...props} type='text' label='Сублогин' optional />}
             />
             <Field
               name='password'
               placeholder={ELOGIN_PAGE_TEXT.PASSWORD}
-              render={(props) => <Input {...props} type='password' label="Пароль" />}
+              render={(props) => <Input {...props} type='password' label='Пароль' />}
               validate={composeValidators(required, withoutCyrillic)}
             />
             <Submit
-              onClick={() => form.submit()}
+              // onClick={() => form.submit()}
               placeholder={ELOGIN_PAGE_TEXT.SUBMIT}
               loading={loading}
               disabled={pristine || hasValidationErrors}
@@ -87,4 +85,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default LoginPage

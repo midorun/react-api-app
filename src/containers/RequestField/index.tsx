@@ -17,6 +17,7 @@ const RequestField: FC<TRequestFieldProps> = (
     setRequestBody
   }
 ) => {
+  // console.count('RequestField')
   const handleRequestChange = (newRequestBody: string) => {
     setRequestBody(newRequestBody)
     setIsRequestBodyValidJSON(true)

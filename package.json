@@ -114,6 +114,7 @@
     ]
   },
   "devDependencies": {
+    "@welldone-software/why-did-you-render": "^6.2.3",
     "babel-plugin-styled-components": "^2.0.1"
   },
   "jest": {

@@ -5,7 +5,7 @@ import LoadingSpinner from '../LoadingSpinner'
 import * as ST from 'components/Submit/styled'
 
 export type TSubmitProps = {
-  onClick: () => void
+  onClick?: () => void
   placeholder: string
   disabled?: boolean
   loading: boolean

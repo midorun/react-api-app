@@ -10,6 +10,7 @@ import * as ST from './styled'
 export type TRequestHistoryProps = {}
 
 const RequestHistory: FC<TRequestHistoryProps> = () => {
+  // console.count('RequestHistory')
   const requestHistoryListRef = useRef<HTMLDivElement | null>(null)
   const { history } = useAppSelector(state => state.request)
   const { clearHistory } = useActions()

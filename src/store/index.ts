@@ -11,8 +11,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const persistConfig = {
   key: 'root',
-  storage,
-  blacklist: ['lastFullfilledRequest']
+  storage
 }
 
 const rootReducer = combineReducers({

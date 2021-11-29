@@ -42,7 +42,9 @@ const requestSlice = createSlice({
           state.history?.push(action.payload)
         }
       }
-      state.history.splice(0, requestHistoryLimit)
+      if (state.history.length >= requestHistoryLimit) {
+        state.history.splice(requestHistoryLimit)
+      }
     },
     removeRequestFromHistory (state, action: PayloadAction<TRequest>) {
       if (state.history) {

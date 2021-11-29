@@ -12,6 +12,7 @@ export type THeaderProps = {
 }
 
 const Header:FC<THeaderProps> = ({ fullScreenHandle }) => {
+  // console.count('Header')
   const { logout } = useActions()
   const { login, sublogin } = useAppSelector(state => state.auth)
 

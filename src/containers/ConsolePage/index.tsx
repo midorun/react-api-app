@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { Resizable } from 're-resizable'
@@ -11,7 +11,8 @@ import { TRequest } from 'types'
 
 import * as ST from './styled'
 
-const ConsolePage = () => {
+const ConsolePage: FC = () => {
+  console.count('ConsolePage')
   const navigate = useNavigate()
   const fullscreenHandle = useFullScreenHandle()
   const { authenticateCheck, requestSend } = useActions()
@@ -26,20 +27,21 @@ const ConsolePage = () => {
   }
 
   const handleSubmitBtnClick = () => {
-    checkRequestBodyOnValidJSON(requestBody)
-    if (isRequestBodyValidJSON) {
+    if (checkRequestBodyOnValidJSON(requestBody)) {
       requestSend(JSON.parse(requestBody))
+      setIsRequestBodyValidJSON(true)
+    } else {
+      setIsRequestBodyValidJSON(false)
     }
   }
 
-  const checkRequestBodyOnValidJSON = (requestBody: string) => {
+  const checkRequestBodyOnValidJSON = (requestBody: string): boolean => {
     try {
-      const parsedJSONBody = JSON.parse(requestBody)
-      setIsRequestBodyValidJSON(true)
-      return parsedJSONBody
+      JSON.parse(requestBody)
+      return true
     } catch (e) {
       console.log(e)
-      setIsRequestBodyValidJSON(false)
+      return false
     }
   }
 
@@ -75,7 +77,7 @@ const ConsolePage = () => {
             enable={{ right: true }}
           >
             <ST.FieldWrapper>
-              <ST.FieldHeader>${ECONSOLE_PAGE_TEXT.REQUEST_FIELD_TITLE}</ST.FieldHeader>
+              <ST.FieldHeader>{ECONSOLE_PAGE_TEXT.REQUEST_FIELD_TITLE}</ST.FieldHeader>
               <RequestField
                 requestBody={requestBody}
                 setRequestBody={setRequestBody}
@@ -87,7 +89,7 @@ const ConsolePage = () => {
           </Resizable>
 
           <ST.FieldWrapper>
-            <ST.FieldHeader>${ECONSOLE_PAGE_TEXT.RESPONSE_FIELD_TITLE}</ST.FieldHeader>
+            <ST.FieldHeader>{ECONSOLE_PAGE_TEXT.RESPONSE_FIELD_TITLE}</ST.FieldHeader>
             <ResponseField />
           </ST.FieldWrapper>
         </ST.FieldsWrapper>
@@ -99,17 +101,17 @@ const ConsolePage = () => {
             onClick={() => handleSubmitBtnClick()}
             loading={false}
           />
-          <ST.GitHubLink>${ECONSOLE_PAGE_TEXT.GITHUB_LINK}</ST.GitHubLink>
+          <ST.GitHubLink>{ECONSOLE_PAGE_TEXT.GITHUB_LINK}</ST.GitHubLink>
           <ST.FormatJSON
             onClick={() => formatRequestBody(JSON.parse(requestBody))}
           >
-            <Icon id={'format-json'}/>
-            ${ECONSOLE_PAGE_TEXT.FORMAT}
+            <Icon id={'format-json'} />
+            {ECONSOLE_PAGE_TEXT.FORMAT}
           </ST.FormatJSON>
         </ST.Footer>
       </ST.ConsolePage>
     </FullScreen>
   )
 }
-
+ConsolePage.whyDidYouRender = true
 export default ConsolePage

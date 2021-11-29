@@ -7,13 +7,15 @@ import { store, persistor } from 'store'
 import { LoginPage, ConsolePage } from 'containers'
 
 function App () {
+  console.count('App')
   return (
     <Router>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate
+          loading={null} persistor={persistor}>
           <Routes>
-            <Route path="/" element={<LoginPage />}/>
-            <Route path="console" element={ <ConsolePage/>}/>
+            <Route path='/' element={<LoginPage />} />
+            <Route path='/console' element={<ConsolePage />} />
           </Routes>
         </PersistGate>
       </Provider>
