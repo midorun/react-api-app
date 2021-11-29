@@ -15,11 +15,11 @@ const Icon: FC<TIconProps> = ({ id, className, width, height }) => {
   return (
     <ST.svg
       className={className && className + 'icon'}
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns='http://www.w3.org/2000/svg'
       width={width}
       height={height}
     >
-      <use xlinkHref={`${iconsRoute}#${id}`}/>
+      <use xlinkHref={`${iconsRoute}#${id}`} />
     </ST.svg>
   )
 }

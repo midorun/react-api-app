@@ -15,27 +15,28 @@ export const DropdownItem = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  
-  &:hover{
+
+  &:hover {
     color: ${ECOLORS.WHITE};
   }
 `
 
 export const Execute = styled(DropdownItem)`
-  &:hover{
+  &:hover {
     color: ${ECOLORS.BLACK}
   }
 `
 
 export const Copy = styled(DropdownItem)`
-  &:hover{
+  &:hover {
     background: ${ECOLORS.BLUE};
   }
 `
 
 export const Delete = styled(DropdownItem)`
   border-top: 1px solid ${ECOLORS.BORDER_GRAY};
-  &:hover{
+
+  &:hover {
     background: ${ECOLORS.RED};
   }
 `

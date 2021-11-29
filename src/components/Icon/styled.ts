@@ -16,7 +16,7 @@ export const svg = styled.svg<{ width?: string, height?: string }>`
     width: 115px;
     height: 30px;
   }
-  
+
   &:hover {
     stroke: ${ECOLORS.BLUE};
   }

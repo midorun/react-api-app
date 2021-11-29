@@ -13,13 +13,12 @@ export type TSubmitProps = {
   height?: string
 }
 
-export type TButtonProps = Pick<
-  TSubmitProps,
+export type TButtonProps = Pick<TSubmitProps,
   'width' | 'height' | 'onClick' | 'disabled'>
 
 const Submit: FC<TSubmitProps> = ({ placeholder, loading, ...rest }) => {
   return (
-    <ST.Button type="submit" {...rest}>
+    <ST.Button type='submit' {...rest}>
       {loading ? <LoadingSpinner /> : placeholder}
     </ST.Button>
   )
