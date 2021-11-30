@@ -1,5 +1,7 @@
 import styled from 'styled-components/macro'
 
+import { ECOLORS } from 'constants/colors'
+
 export const Wrapper = styled.div`
   height: 100%;
   display: flex;
@@ -13,8 +15,8 @@ export const FormStyled = styled.form`
   min-height: 425px;
   left: calc(50% - 520px / 2);
   top: 222px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background: ${ECOLORS.WHITE};
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 40px 30px;
 `

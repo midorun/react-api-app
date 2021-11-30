@@ -23,3 +23,23 @@ export type TAuthState = {
   sublogin?: string | null
   error: TAuthFailure | null
 }
+
+export type TRequestState = {
+  loading: boolean,
+  history: TFullfilledRequest[] | null,
+  error: unknown | null,
+  requestBody: string,
+  lastFullfilledRequest: TFullfilledRequest | null
+}
+
+export type TRequest = {
+  action: string,
+  [key: string]: any
+}
+
+export type TFullfilledRequest = {
+  request: TRequest,
+  response: any,
+  error: any,
+
+}

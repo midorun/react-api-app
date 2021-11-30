@@ -1,27 +1,25 @@
-import { useEffect } from 'react'
-import { Form, Field } from 'react-final-form'
+import { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Form, Field } from 'react-final-form'
 
 import { composeValidators, required, withoutCyrillic } from 'helpers/validators'
 import { useActions, useAppSelector } from 'store/hooks'
 import { Input, Icon, Submit, Logo } from 'components'
+import { ELOGIN_PAGE_TEXT } from 'containers/LoginPage/constants'
 import { TAuthPayload } from 'types'
 
 import * as ST from './styled'
 
 const LoginPage = () => {
+  // console.count('LoginPage')
   const navigate = useNavigate()
   const { authenticate } = useActions()
-
-  const loading = useAppSelector((state) => state.auth.loading)
-  const isLoggedIn = useAppSelector((state) => !!state.auth.sessionKey?.length)
-  const authError = useAppSelector(state => state.auth.error)
-
+  const { loading, error, sessionKey } = useAppSelector((state) => state.auth)
   useEffect(() => {
-    if (isLoggedIn) {
+    if (sessionKey) {
       navigate('/console')
     }
-  }, [isLoggedIn])
+  }, [sessionKey])
 
   const onSubmit = ({ login, sublogin, password }: TAuthPayload) => {
     authenticate({
@@ -40,22 +38,22 @@ const LoginPage = () => {
         onSubmit={onSubmit}
         render={({ handleSubmit, form, pristine, hasValidationErrors }) => (
           <ST.FormStyled onSubmit={handleSubmit}>
-            <ST.Header>API Консолька</ST.Header>
+            <ST.Header>{ELOGIN_PAGE_TEXT.HEADER}</ST.Header>
             {
-              authError &&
-            <ST.Error>
-              <ST.ErrorIcon>
-                <Icon id='meh-face' />
-              </ST.ErrorIcon>
-              <ST.ErrorText>
-                <ST.ErrorTitle>
-                  Вход не вышел
-                </ST.ErrorTitle>
-                <ST.ErrorDescription>
-                  {`id:${authError?.id}, explain:${authError?.explain}`}
-                </ST.ErrorDescription>
-              </ST.ErrorText>
-            </ST.Error>
+              error &&
+              <ST.Error>
+                <ST.ErrorIcon>
+                  <Icon id='meh-face' />
+                </ST.ErrorIcon>
+                <ST.ErrorText>
+                  <ST.ErrorTitle>
+                    {ELOGIN_PAGE_TEXT.ERROR_TITLE}
+                  </ST.ErrorTitle>
+                  <ST.ErrorDescription>
+                    {`id:${error?.id}, explain:${error?.explain}`}
+                  </ST.ErrorDescription>
+                </ST.ErrorText>
+              </ST.Error>
             }
             <Field
               name='login'
@@ -64,18 +62,18 @@ const LoginPage = () => {
             />
             <Field
               name='sublogin'
-              placeholder='Сублогин'
-              render={(props) => <Input {...props} type="text" label="Сублогин" optional />}
+              placeholder={ELOGIN_PAGE_TEXT.SUBLOGIN}
+              render={(props) => <Input {...props} type='text' label='Сублогин' optional />}
             />
             <Field
               name='password'
-              placeholder='Пароль'
-              render={(props) => <Input {...props} type='password' label="Пароль" />}
+              placeholder={ELOGIN_PAGE_TEXT.PASSWORD}
+              render={(props) => <Input {...props} type='password' label='Пароль' />}
               validate={composeValidators(required, withoutCyrillic)}
             />
             <Submit
-              onClick={form.reset}
-              placeholder="Войти"
+              // onClick={() => form.submit()}
+              placeholder={ELOGIN_PAGE_TEXT.SUBMIT}
               loading={loading}
               disabled={pristine || hasValidationErrors}
             />

@@ -7,7 +7,7 @@ import * as ST from './styled'
 const Logo = () => {
   return (
     <ST.Wrapper>
-      <Icon id="logo" />
+      <Icon id='logo' />
     </ST.Wrapper>
   )
 }
