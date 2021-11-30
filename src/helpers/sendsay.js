@@ -4,4 +4,14 @@ sendsay.setSessionFromCookie('sendsay_session')
 
 export default class SendsayCustom {
   static sendsay = sendsay;
+
+  static pingWithAuthorization () {
+    return sendsay.request({ action: 'pong' })
+  }
+
+  static login (payload) {
+    return sendsay.login(payload).then(() => {
+      document.cookie = `sendsay_session=${sendsay.session}`
+    })
+  }
 }

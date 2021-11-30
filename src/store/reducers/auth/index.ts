@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { TAuthFailure, TAuthPayload, TAuthState, TAuthSuccess } from 'types'
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   loading: false,
   sessionKey: null,
   login: null,

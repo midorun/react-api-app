@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { all, put, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeLatest } from 'redux-saga/effects'
 
 import api from 'helpers/sendsay'
 import { EActionTypes } from 'store/constants'
@@ -10,9 +10,7 @@ const { authenticateSuccess, authenticateFailure } = authActions
 
 export function * authenticateCheckSaga () {
   try {
-    yield api.sendsay.request({
-      action: 'pong'
-    })
+    yield call(api.pingWithAuthorization)
   } catch (error) {
     if (error.id === 'error/auth/failed') {
       yield put(authenticateFailure(error))
@@ -22,15 +20,11 @@ export function * authenticateCheckSaga () {
 
 export function * authenticateSaga ({ payload }: PayloadAction<TAuthPayload>) {
   try {
-    yield api.sendsay
-      .login({
-        login: payload.login,
-        sublogin: payload.sublogin,
-        password: payload.password
-      })
-      .then(() => {
-        document.cookie = `sendsay_session=${api.sendsay.session}`
-      })
+    yield call(api.login, {
+      login: payload.login,
+      sublogin: payload.sublogin,
+      password: payload.password
+    })
 
     yield put(
       authenticateSuccess({
